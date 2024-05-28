@@ -43,6 +43,8 @@ class PostController extends Controller
         } catch (Exception $e) {
             return response()->json($e);
         }
+
+        
     } 
 
     public function update(CreatePostRequest $request, Post $post){
