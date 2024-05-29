@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\logUserRequest;
 use App\Http\Requests\RegisterUser;
 use App\Models\User;
 use Exception;
@@ -31,5 +32,20 @@ class Usercontroller extends Controller
             return response()->json($e);
         }
 
+    }
+
+    public function login(logUserRequest $request){
+
+      if (auth()->attempt($request->only(['email','password']))) {
+        # code...
+      }
+       else {
+        //si les nformations ne correspondent a aucun utilisateur
+        return response()->json([
+            'status_code'=>403,
+            'statu_message'=>'informatin non valide',
+            ]);
+      }
+      
     }
 }
