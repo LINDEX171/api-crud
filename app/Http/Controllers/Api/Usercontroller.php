@@ -37,7 +37,17 @@ class Usercontroller extends Controller
     public function login(logUserRequest $request){
 
       if (auth()->attempt($request->only(['email','password']))) {
-        # code...
+       
+        $user = auth()->user();
+        
+        $token = $user->createToken('MA_CLE_SECRETE_UNIQUEMENT_AU_BACKEND')->plainTextToken;
+
+        return response()->json([
+            'status_code'=>200,
+            'statu_message'=>'Utilisateur connecté',
+            'user'=>$user,
+            'token'=>$token,
+            ]);
       }
        else {
         //si les nformations ne correspondent a aucun utilisateur
