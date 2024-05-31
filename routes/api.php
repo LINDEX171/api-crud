@@ -28,6 +28,12 @@ Route::delete('posts/{post}',[PostController::class, 'delete']);
 Route::post('/register', [Usercontroller::class, 'register']);
 Route::post('/login', [Usercontroller::class, 'login']);
 
-Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
-    return $request->user();
-});
+    Route::middleware('auth:sanctum')->group(function (){
+        //ajouter un post
+        Route::post('posts/create',[PostController::class, 'store']);
+
+        //retourner l'utisateur actuellement connecté
+        Route::get('/user', function (Request $request) {
+            return $request->user();
+        });
+    });

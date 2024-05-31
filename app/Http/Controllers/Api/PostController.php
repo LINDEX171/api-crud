@@ -33,6 +33,7 @@ class PostController extends Controller
         $post = new Post();
         $post -> titre = $request -> titre;
         $post -> description = $request -> description;
+        $post -> user_id = auth()->user()->id;
         $post -> save();
 
         return response()->json([
