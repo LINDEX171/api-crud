@@ -53,7 +53,17 @@ class PostController extends Controller
          try {
             $post -> titre = $request -> titre;
          $post -> description = $request -> description;
-         $post -> save();
+         
+         if ($post -> user_id === auth()->user()->id) {
+            $post -> save();
+
+         } else {
+
+            return response()->json([
+            'status_code'=>422,
+            'statu_message'=>'vous n\etes pas l\'auteur de ce post',
+            ]);
+         }
 
          return response()->json([
             'status_code'=>200,
@@ -74,7 +84,16 @@ class PostController extends Controller
         
         try {
 
-           $post -> delete();
+            if ($post -> user_id === auth()->user()->id) {
+                $post -> delete();
+    
+             } else {
+    
+                return response()->json([
+                'status_code'=>422,
+                'statu_message'=>'vous n\etes pas l\'auteur de ce post',
+                ]);
+             }
 
         return response()->json([
            'status_code'=>200,
